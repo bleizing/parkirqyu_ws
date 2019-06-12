@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('is_active')->default(1);   // 1 = Aktif, 0 = Tidak Aktif
             $table->string('email')->unique();
             $table->string('password');
-            $table->tinyInteger('user_type')->default(1);   // 1 = Karyawan, 2 = Admin, 3 = Petugas
+            $table->tinyInteger('user_type')->default(1);   // 1 = Admin, 2 = Petugas, 3 = Karyawan
             $table->rememberToken();
             $table->timestamps();
         });
