@@ -16,8 +16,9 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->timestamps();
-            
+            $table->tinyInteger('invoice_type');        // 1 = Parkir, 2 = Topup
+            $table->timestamps();       // Created_at = Start, Updated_at = Finish
+
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

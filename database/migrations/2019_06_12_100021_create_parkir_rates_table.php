@@ -15,6 +15,11 @@ class CreateParkirRatesTable extends Migration
     {
         Schema::create('parkir_rates', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->tinyInteger('is_active')->default(1);
+            $table->float('satu_jam_pertama');
+            $table->float('tiap_jam');
+            $table->float('per_hari');
+            $table->tinyInteger('parkir_type');     // 1 = Motor, 2 = Mobil
             $table->timestamps();
         });
     }

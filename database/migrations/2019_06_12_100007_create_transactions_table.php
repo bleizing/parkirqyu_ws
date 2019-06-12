@@ -15,7 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('invoice_id')->unsigned();
+            $table->float('nominal')->default(0.0);
+            $table->bigInteger('petugas_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('petugas_id')->references('id')->on('users');
         });
     }
 
