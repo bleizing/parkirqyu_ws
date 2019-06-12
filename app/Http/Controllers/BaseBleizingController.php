@@ -94,6 +94,6 @@ class BaseBleizingController extends Controller
 
     protected function withNumberFormat($val)
     {
-        return number_format($val, 2, ",", ".");
+        return number_format($val, 0, ",", ".");
     }
 }
