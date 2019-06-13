@@ -21,8 +21,8 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $user = User::findOrFail($request->input('user_id'));
-        if ($user->user_type != 1) {
+        $user = User::find($request->input('user_id'));
+        if (!$user || $user->user_type != 1) {
             $data = array(
                 'error' => array('message' => 'Access Denied')
             );
@@ -32,6 +32,7 @@ class AdminMiddleware
             
             return $this->sendResponse();
         }
+
         return $next($request);
     }
 }

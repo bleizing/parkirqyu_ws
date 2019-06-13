@@ -19,9 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/user/login', 'UserController@login');
 
-Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
 	    Route::get('/get', 'Admin\EmployeeController@get');
+	    Route::post('/create', 'Admin\EmployeeController@create');
 	});
     // Route::get('/get_employee', '');
 });

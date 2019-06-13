@@ -71,6 +71,11 @@ class UserSeeder extends Seeder
     		'nominal' => 100000
     	]);
 
+        $balance_admin = Balance::create([
+            'user_id' => $user_admin->id,
+            'nominal' => 1000000
+        ]);
+
     	$invoice = Invoice::create([
     		'user_id' => $user->id,
     		'invoice_type' => 1
