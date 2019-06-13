@@ -16,8 +16,8 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->tinyInteger('is_active')->default(1);   // 1 = Aktif, 0 = Tidak Aktif
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('nomor_registrasi')->nullable();     // Nomor Kendaraan
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->string('nomor_registrasi')->unique();     // Nomor Kendaraan
             $table->string('nama_pemilik')->nullable();
             $table->string('alamat')->nullable();
             $table->string('merk')->nullable();

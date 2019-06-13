@@ -19,8 +19,7 @@ class BaseBleizingController extends Controller
 
 	protected function getUserModelById($user_id)
     {
-        $user = User::with('employee')
-                    ->where('id', $user_id)
+        $user = User::where('id', $user_id)
                     ->where('is_active', 1)
                     ->first();
 

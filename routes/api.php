@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/user/login', 'UserController@login');
 Route::get('/parkir_rate/get', 'UserController@get_parkir_rate');
-Route::get('/test_qrcode', 'UserController@test_qrcode');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
@@ -27,6 +26,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	    Route::post('/create', 'Admin\EmployeeController@create');
 	    Route::post('/edit', 'Admin\EmployeeController@edit');
 	    Route::post('/delete', 'Admin\EmployeeController@delete');
+	});
+
+	Route::group(['prefix' => 'vehicle'], function () {
+	    Route::post('/get', 'Admin\VehicleController@get');
+	    Route::post('/create', 'Admin\VehicleController@create');
+	    Route::post('/edit', 'Admin\VehicleController@edit');
+	    Route::post('/delete', 'Admin\VehicleController@delete');
 	});
 
 	Route::group(['prefix' => 'parkir_rate'], function () {

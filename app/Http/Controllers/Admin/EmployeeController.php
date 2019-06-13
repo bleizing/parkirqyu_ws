@@ -145,7 +145,7 @@ class EmployeeController extends BaseBleizingController
         if ($user) {
         	$user->is_active = 0;
 
-        	$user->push();
+        	$user->save();
 
         	$this->deletedSuccess();
         } else {

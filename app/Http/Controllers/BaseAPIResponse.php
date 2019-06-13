@@ -46,6 +46,19 @@ trait BaseAPIResponse
         $this->preSendResponse($data, $status_code, $error_code);
     }
 
+    protected function dataExisted()
+    {
+        $message = "Data Sudah Ada";
+        $status_code = config('constant.status_codes.status_code_bad_request');
+        $error_code = config('constant.error_codes.error_code_data_exist');
+
+        $data = array(
+            'message' => $message
+        );
+
+        $this->preSendResponse($data, $status_code, $error_code);
+    }
+
     protected function validationError()
     {
         $message = "Data tidak valid";
