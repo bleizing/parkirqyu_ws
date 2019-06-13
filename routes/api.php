@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/user/login', 'UserController@login');
 Route::get('/parkir_rate/get', 'UserController@get_parkir_rate');
+Route::get('/test_qrcode', 'UserController@test_qrcode');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {

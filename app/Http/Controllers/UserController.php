@@ -87,4 +87,9 @@ class UserController extends BaseBleizingController
         $this->setData($data);
         return $this->sendResponse();
     }
+
+    public function test_qrcode()
+    {
+        \QrCode::format('png')->size(500)->generate('A1234BCD', '..\..\public_html\parkirqyu\vehicles\A1234BCD.png');
+    }
 }
