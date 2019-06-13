@@ -90,6 +90,6 @@ class UserController extends BaseBleizingController
 
     public function test_qrcode()
     {
-        \QrCode::format('png')->size(500)->generate('A1234BCD', 'vehicles\A1234BCD.png');
+        \QrCode::format('png')->generate('A1234BCD', 'vehicles/A1234BCD.png');
     }
 }
