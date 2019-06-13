@@ -36,7 +36,7 @@ trait BaseAPIResponse
     protected function dataNotFound()
     {
         $message = "Data tidak ditemukan";
-        $status_code = config('constant.status_codes.status_code_success');
+        $status_code = config('constant.status_codes.status_code_bad_request');
         $error_code = config('constant.error_codes.error_code_data_not_exist');
 
         $data = array(

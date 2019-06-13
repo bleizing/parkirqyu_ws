@@ -21,8 +21,10 @@ Route::post('/user/login', 'UserController@login');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
-	    Route::get('/get', 'Admin\EmployeeController@get');
+	    Route::post('/get', 'Admin\EmployeeController@get');
 	    Route::post('/create', 'Admin\EmployeeController@create');
+	    Route::post('/edit', 'Admin\EmployeeController@edit');
+	    Route::post('/delete', 'Admin\EmployeeController@delete');
 	});
     // Route::get('/get_employee', '');
 });
