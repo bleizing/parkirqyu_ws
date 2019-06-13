@@ -81,7 +81,7 @@ class VehicleController extends BaseBleizingController
 
 	        	$filename = 'vehicles/' . $request->input('nomor_registrasi') . '.png';
 
-	        	\QrCode::format('png')->generate($request->input('nomor_registrasi'), $filename);
+	        	\QrCode::format('png')->size(400)->generate($request->input('nomor_registrasi'), $filename);
 
 	        	$this->createdSuccess();
         	}
