@@ -10,6 +10,7 @@ use App\Http\Controllers\BaseBleizingController;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
+use App\ParkirRate;
 
 class UserController extends BaseBleizingController
 {
@@ -76,4 +77,14 @@ class UserController extends BaseBleizingController
         }
         return $this->sendResponse();
 	}
+
+    public function get_parkir_rate()
+    {
+        $parkir_rates = ParkirRate::All();
+
+        $data = $parkir_rates;
+
+        $this->setData($data);
+        return $this->sendResponse();
+    }
 }

@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/user/login', 'UserController@login');
+Route::get('/parkir_rate/get', 'UserController@get_parkir_rate');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
@@ -25,6 +26,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	    Route::post('/create', 'Admin\EmployeeController@create');
 	    Route::post('/edit', 'Admin\EmployeeController@edit');
 	    Route::post('/delete', 'Admin\EmployeeController@delete');
+	});
+
+	Route::group(['prefix' => 'parkir_rate'], function () {
+	    Route::post('/edit', 'Admin\ParkirRateController@edit');
 	});
     // Route::get('/get_employee', '');
 });
