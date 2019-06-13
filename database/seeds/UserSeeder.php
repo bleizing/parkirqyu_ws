@@ -59,11 +59,10 @@ class UserSeeder extends Seeder
     		'alamat' => 'Bekasi',
     		'merk' => 'Honda',
     		'type' => 'ABCDEF8G A/T',
-    		'jenis' => 'Sepeda Motor',
-    		'model' => 'Sepeda Motor',
     		'tahun_pembuatan' => '2010',
     		'nomor_rangka' => 'ABCDEFGHIJKLMNOPQ',
     		'nomor_mesin' => 'ABCEFGHIJKL',
+            'vehicle_type' => 1
     	]);
 
     	$balance = Balance::create([
@@ -76,18 +75,37 @@ class UserSeeder extends Seeder
             'nominal' => 1000000
         ]);
 
-    	$invoice = Invoice::create([
+    	$invoice_parkir = Invoice::create([
     		'user_id' => $user->id,
+            'vehicle_id' => $vehicle->id,
     		'invoice_type' => 1
     	]);
 
-    	$transaction = Transaction::create([
-    		'invoice_id' => $invoice->id,
-    		'nominal' => 50000,
+        $invoice_topup = Invoice::create([
+            'user_id' => $user->id,
+            'invoice_type' => 2,
+            'kode_referensi' => 'ABCD123EFG',
+            'nominal' => 50000
+        ]);
+
+        $invoice_parkir->nominal = 10000;
+        $invoice_parkir->save();
+
+    	$transaction_parkir = Transaction::create([
+    		'invoice_id' => $invoice_parkir->id,
+            'nominal_kredit' => $invoice_parkir->nominal,
     		'petugas_id' => $user_admin->id
     	]);
 
-    	$invoice->is_active = 2;
-    	$invoice->save();
+        $invoice_parkir->is_active = 2;
+        $invoice_parkir->save();
+
+        $transaction_topup = Transaction::create([
+            'invoice_id' => $invoice_topup->id,
+            'nominal_debit' => $invoice_topup->nominal
+        ]);
+
+    	$invoice_topup->is_active = 2;
+    	$invoice_topup->save();
     }
 }

@@ -46,11 +46,10 @@ class VehicleController extends BaseBleizingController
     		'alamat' => 'required|string',
     		'merk' => 'required|string',
     		'type' => 'required|string',
-    		'jenis' => 'required|string',
-    		'model' => 'required|string',
     		'tahun_pembuatan' => 'required|string',
     		'nomor_rangka' => 'required|string',
-    		'nomor_mesin' => 'required|string'
+    		'nomor_mesin' => 'required|string',
+    		'vehicle_type' => 'required|integer'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
@@ -71,11 +70,10 @@ class VehicleController extends BaseBleizingController
 	        	$vehicle->alamat = $request->input('alamat');
 	        	$vehicle->merk = $request->input('merk');
 	        	$vehicle->type = $request->input('type');
-	        	$vehicle->jenis = $request->input('jenis');
-	        	$vehicle->model = $request->input('model');
 	        	$vehicle->tahun_pembuatan = $request->input('tahun_pembuatan');
 	        	$vehicle->nomor_rangka = $request->input('nomor_rangka');
 	        	$vehicle->nomor_mesin = $request->input('nomor_mesin');
+	        	$vehicle->vehicle_type = $request->input('vehicle_type');
 	        	$vehicle->is_active = 1;
 	        	$vehicle->save();
 
@@ -101,11 +99,10 @@ class VehicleController extends BaseBleizingController
     		'alamat' => 'required|string',
     		'merk' => 'required|string',
     		'type' => 'required|string',
-    		'jenis' => 'required|string',
-    		'model' => 'required|string',
     		'tahun_pembuatan' => 'required|string',
     		'nomor_rangka' => 'required|string',
-    		'nomor_mesin' => 'required|string'
+    		'nomor_mesin' => 'required|string',
+    		'vehicle_type' => 'required|integer'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
@@ -119,11 +116,10 @@ class VehicleController extends BaseBleizingController
         	$vehicle->alamat = $request->input('alamat');
         	$vehicle->merk = $request->input('merk');
         	$vehicle->type = $request->input('type');
-        	$vehicle->jenis = $request->input('jenis');
-        	$vehicle->model = $request->input('model');
         	$vehicle->tahun_pembuatan = $request->input('tahun_pembuatan');
         	$vehicle->nomor_rangka = $request->input('nomor_rangka');
         	$vehicle->nomor_mesin = $request->input('nomor_mesin');
+	        $vehicle->vehicle_type = $request->input('vehicle_type');
         	$vehicle->is_active = 1;
         	$vehicle->save();
 

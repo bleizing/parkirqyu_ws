@@ -22,11 +22,10 @@ class CreateVehiclesTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('merk')->nullable();
             $table->string('type')->nullable();
-            $table->string('jenis')->nullable();
-            $table->string('model')->nullable();
             $table->string('tahun_pembuatan')->nullable();
             $table->string('nomor_rangka')->nullable();
             $table->string('nomor_mesin')->nullable();
+            $table->tinyInteger('vehicle_type')->nullable();    // 1 = Motor, 2 = Mobil
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

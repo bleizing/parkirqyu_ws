@@ -16,7 +16,8 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('invoice_id')->unsigned();
-            $table->integer('nominal')->default(0);
+            $table->integer('nominal_debit')->default(0);
+            $table->integer('nominal_kredit')->default(0);
             $table->bigInteger('petugas_id')->unsigned()->nullable();
             $table->timestamps();
 
