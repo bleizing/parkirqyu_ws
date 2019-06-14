@@ -15,10 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->tinyInteger('is_active')->default(1);   // 1 = Aktif, 0 = Tidak Aktif
+            $table->tinyInteger('is_active')->default(1);           // 1 = Aktif, 0 = Tidak Aktif
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->tinyInteger('user_type')->default(1);   // 1 = Admin, 2 = Petugas, 3 = Karyawan
+            $table->tinyInteger('user_type')->default(1);           // 1 = Admin, 2 = Petugas, 3 = Karyawan
             $table->rememberToken();
             $table->timestamps();
         });

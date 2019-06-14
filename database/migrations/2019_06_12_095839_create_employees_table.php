@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('nama')->nullable();
-            $table->tinyInteger('jenis_kelamin')->nullable();   // 1 = Laki-laki, 2 = Perempuan
+            $table->tinyInteger('jenis_kelamin')->nullable();           // 1 = Laki-laki, 2 = Perempuan
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('alamat')->nullable();

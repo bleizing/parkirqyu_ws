@@ -78,13 +78,15 @@ class UserSeeder extends Seeder
     	$invoice_parkir = Invoice::create([
     		'user_id' => $user->id,
             'vehicle_id' => $vehicle->id,
+            'invoice_code' => 'T6390582563',
     		'invoice_type' => 1
     	]);
 
         $invoice_topup = Invoice::create([
             'user_id' => $user->id,
+            'invoice_code' => 'T6390582563',
             'invoice_type' => 2,
-            'kode_referensi' => 'ABCD123EFG',
+            'reference_code' => 'ABCD123EFG',
             'nominal' => 50000
         ]);
 
