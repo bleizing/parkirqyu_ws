@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\User;
 use App\ParkirRate;
+use App\Vehicle;
 
 class UserController extends BaseBleizingController
 {
@@ -54,7 +55,7 @@ class UserController extends BaseBleizingController
 
                 $this->setData($data);
         	} else {
-        		$message = "Email atau password salah";
+        		$message = "Password salah";
                 $status_code = config('constant.status_codes.status_code_bad_request');
                 $error_code = config('constant.error_codes.error_code_data_not_match');
 
@@ -85,6 +86,31 @@ class UserController extends BaseBleizingController
         $data = $parkir_rates;
 
         $this->setData($data);
+        return $this->sendResponse();
+    }
+
+    public function get_user_vehicle(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            $Vehicles = $user->Vehicles;
+
+            $data = $Vehicles;
+
+            $this->setData($data);
+        } else {
+            $this->dataNotFound();
+        }
+
         return $this->sendResponse();
     }
 }
