@@ -102,9 +102,9 @@ class UserController extends BaseBleizingController
         $user = $this->getUserModelById($request->input('user_id'));
 
         if ($user) {
-            $Vehicles = $user->vehicles();
+            $vehicles = $user->vehicles;
 
-            $data = $Vehicles;
+            $data = $vehicles;
 
             $this->setData($data);
         } else {
