@@ -104,6 +104,16 @@ class UserController extends BaseBleizingController
         if ($user) {
             $vehicles = $user->vehicles;
 
+            foreach ($vehicles as $key => $value) {
+                if ($value->vehicle_type == 1) {
+                    $vehicle_type = "Motor";
+                } else {
+                    $vehicle_type = "Mobil";
+                }
+
+                $value->vehicle_type = $vehicle_type;
+            }
+
             $data = $vehicles;
 
             $this->setData($data);
