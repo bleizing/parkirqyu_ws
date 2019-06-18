@@ -20,17 +20,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/user/login', 'UserController@login');
 Route::get('/user/get_parkir_rate', 'UserController@get_parkir_rate');
 Route::post('/user/get_user_vehicle', 'UserController@get_user_vehicle');
+Route::post('/user/get_user_info', 'UserController@get_user_info');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
-	    Route::post('/get', 'Admin\EmployeeController@get');
+	    Route::post('/get_all', 'Admin\EmployeeController@get_all');
+	    Route::post('/get_by_user_id', 'Admin\EmployeeController@get_by_user_id');
 	    Route::post('/create', 'Admin\EmployeeController@create');
 	    Route::post('/edit', 'Admin\EmployeeController@edit');
 	    Route::post('/delete', 'Admin\EmployeeController@delete');
 	});
 
 	Route::group(['prefix' => 'vehicle'], function () {
-	    Route::post('/get', 'Admin\VehicleController@get');
+	    Route::post('/get_all', 'Admin\VehicleController@get_all');
+	    Route::post('/get_by_id', 'Admin\VehicleController@get_by_id');
 	    Route::post('/create', 'Admin\VehicleController@create');
 	    Route::post('/edit', 'Admin\VehicleController@edit');
 	    Route::post('/delete', 'Admin\VehicleController@delete');

@@ -78,7 +78,7 @@ class UserSeeder extends Seeder
     	$invoice_parkir = Invoice::create([
     		'user_id' => $user->id,
             'vehicle_id' => $vehicle->id,
-            'invoice_code' => 'T6390582563',
+            'invoice_code' => 'P3567435649',
     		'invoice_type' => 1
     	]);
 
@@ -91,6 +91,7 @@ class UserSeeder extends Seeder
         ]);
 
         $invoice_parkir->nominal = 10000;
+        $invoice_parkir->payment_type = 1;
         $invoice_parkir->save();
 
     	$transaction_parkir = Transaction::create([

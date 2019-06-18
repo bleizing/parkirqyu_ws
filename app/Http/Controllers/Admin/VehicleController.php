@@ -10,7 +10,7 @@ use App\Vehicle;
 
 class VehicleController extends BaseBleizingController
 {
-    public function get(Request $request)
+    public function get_all(Request $request)
     {
     	$rules = array(
     		'user_id' => 'required|integer',
@@ -31,6 +31,31 @@ class VehicleController extends BaseBleizingController
         	$this->setData($data);
         } else {
         	$this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
+    public function get_by_id(Request $request) {
+        $rules = array(
+            'user_id' => 'required|integer',
+            'vehicle_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->employee_id);
+
+        if ($user) {
+            $vehicles = Vehicle::where('id', $request->input('vehicle_id'))->where('is_active', 1)->get();
+
+            $data = $vehicles;
+
+            $this->setData($data);
+        } else {
+            $this->dataNotFound();
         }
 
         return $this->sendResponse();

@@ -30,30 +30,7 @@ class UserController extends BaseBleizingController
 
         if ($user) {
         	if (Hash::check($request->input('password'), $user->password)) {
-                $user_id = $user->id;
-                $nama = $user->employee->nama;
-                $jenis_kelamin = $user->employee->jenis_kelamin = 1 ? 'Laki-laki' : 'Perempuan';
-                $tempat_lahir = $user->employee->tempat_lahir;
-                $tanggal_lahir = Carbon::parse($user->employee->tanggal_lahir)->format('d/m/Y');
-                $alamat = $user->employee->alamat;
-                $saldo = 'Rp ';
-                if (is_null($user->balance)) {
-                    $saldo .= 0;
-                } else {
-                    $saldo .= $this->withNumberFormat($user->balance->nominal);
-                }
-
-                $data = array(
-                    'user_id' => $user_id,
-                    'nama' => $nama,
-                    'jenis_kelamin' => $jenis_kelamin,
-                    'tempat_lahir' => $tempat_lahir,
-                    'tanggal_lahir' => $tanggal_lahir,
-                    'alamat' => $alamat,
-                    'saldo' => $saldo
-                );
-
-                $this->setData($data);
+                $this->userResponse($user);
         	} else {
         		$message = "Password salah";
                 $status_code = config('constant.status_codes.status_code_bad_request');
@@ -122,5 +99,56 @@ class UserController extends BaseBleizingController
         }
 
         return $this->sendResponse();
+    }
+
+    public function get_user_info(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            $this->userResponse($user);
+        } else {
+            $this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
+    private function userResponse(User $user)
+    {
+        $user_id = $user->id;
+        $nama = $user->employee->nama;
+        $jenis_kelamin = $user->employee->jenis_kelamin = 1 ? 'Laki-laki' : 'Perempuan';
+        $tempat_lahir = $user->employee->tempat_lahir;
+        $tanggal_lahir = Carbon::parse($user->employee->tanggal_lahir)->format('d/m/Y');
+        $alamat = $user->employee->alamat;
+        $saldo = 'Rp ';
+        if (is_null($user->balance)) {
+            $saldo .= 0;
+        } else {
+            $saldo .= $this->withNumberFormat($user->balance->nominal);
+        }
+        $user_type = $user->user_type;
+
+        $data = array(
+            'user_id' => $user_id,
+            'nama' => $nama,
+            'jenis_kelamin' => $jenis_kelamin,
+            'tempat_lahir' => $tempat_lahir,
+            'tanggal_lahir' => $tanggal_lahir,
+            'alamat' => $alamat,
+            'saldo' => $saldo,
+            'user_type' => $user_type
+        );
+
+        $this->setData($data);
     }
 }
