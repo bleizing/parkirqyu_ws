@@ -10,11 +10,11 @@ use App\Vehicle;
 
 class VehicleController extends BaseBleizingController
 {
-    public function get_all(Request $request)
+    public function get_by_user_id(Request $request)
     {
-    	$rules = array(
-    		'user_id' => 'required|integer',
-    		'employee_id' => 'required|integer'
+        $rules = array(
+            'user_id' => 'required|integer',
+            'employee_id' => 'required|integer'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
@@ -24,13 +24,13 @@ class VehicleController extends BaseBleizingController
         $user = $this->getUserModelById($request->employee_id);
 
         if ($user) {
-        	$vehicles = Vehicle::where('user_id', $request->input('employee_id'))->where('is_active', 1)->get();
+            $vehicles = Vehicle::where('user_id', $request->input('employee_id'))->where('is_active', 1)->get();
 
-        	$data = $vehicles;
+            $data = $vehicles;
 
-        	$this->setData($data);
+            $this->setData($data);
         } else {
-        	$this->dataNotFound();
+            $this->dataNotFound();
         }
 
         return $this->sendResponse();
@@ -46,12 +46,10 @@ class VehicleController extends BaseBleizingController
             return $this->sendResponse();
         }
 
-        $user = $this->getUserModelById($request->employee_id);
+        $vehicle = Vehicle::where('id', $request->input('vehicle_id'))->where('is_active', 1)->first();
 
-        if ($user) {
-            $vehicles = Vehicle::where('id', $request->input('vehicle_id'))->where('is_active', 1)->get();
-
-            $data = $vehicles;
+        if ($vehicle) {
+            $data = $vehicle;
 
             $this->setData($data);
         } else {

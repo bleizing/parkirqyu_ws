@@ -24,18 +24,23 @@ class EmployeeController extends BaseBleizingController
             return $this->sendResponse();
         }
 
-    	$employees = User::with('employee')->where('is_active', 1)->get();
+        $data = array();
+
+    	$employees = User::where('is_active', 1)->get();
 
         foreach ($employees as $key => $value) {
-            if ($value->employee->jenis_kelamin == 1) {
-                $jenis_kelamin = "Laki-laki";
-            } else {
-                $jenis_kelamin = "Perempuan";
-            }
-            $value->employee->jenis_kelamin = $jenis_kelamin;
-        }
+            $user_id = $value->id;
+            $nama = $value->employee->nama;
+            $email = $value->email;
 
-    	$data = $employees;
+            $val = array(
+                'user_id' => $user_id,
+                'nama' => $nama,
+                'email' => $email
+            );
+
+            $data[$key] = $val;
+        }
 
     	$this->setData($data);
     	return $this->sendResponse();

@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	});
 
 	Route::group(['prefix' => 'vehicle'], function () {
-	    Route::post('/get_all', 'Admin\VehicleController@get_all');
+	    Route::post('/get_by_user_id', 'Admin\VehicleController@get_by_user_id');
 	    Route::post('/get_by_id', 'Admin\VehicleController@get_by_id');
 	    Route::post('/create', 'Admin\VehicleController@create');
 	    Route::post('/edit', 'Admin\VehicleController@edit');
