@@ -26,6 +26,16 @@ class VehicleController extends BaseBleizingController
         if ($user) {
             $vehicles = Vehicle::where('user_id', $request->input('employee_id'))->where('is_active', 1)->get();
 
+            foreach ($vehicles as $key => $value) {
+                if ($value->vehicle_type == 1) {
+                    $vehicle_type = "Motor";
+                } else {
+                    $vehicle_type = "Mobil";
+                }
+
+                $value->vehicle_type = $vehicle_type;
+            }
+
             $data = $vehicles;
 
             $this->setData($data);
