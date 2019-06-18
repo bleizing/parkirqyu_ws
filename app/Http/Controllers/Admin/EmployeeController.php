@@ -78,7 +78,7 @@ class EmployeeController extends BaseBleizingController
             if ($user_type == 1) {
                 $user_type = "Admin";
             } else if ($user_type == 2) {
-                $user_type = "Petugas";
+                $user_type = "Petugas Parkir";
             } else {
                 $user_type = "Karyawan";
             }
@@ -88,7 +88,7 @@ class EmployeeController extends BaseBleizingController
                 'nama' => $nama,
                 'email' => $email,
                 'jenis_kelamin' => $jenis_kelamin,
-                'email' => $email,
+                'alamat' => $alamat,
                 'tempat_lahir' => $tempat_lahir,
                 'tanggal_lahir' => $tanggal_lahir,
                 'user_type' => $user_type
@@ -119,7 +119,7 @@ class EmployeeController extends BaseBleizingController
             return $this->sendResponse();
         }
 
-        $password = Hash::make(Carbon::parse($request->tanggal_lahir)->format('dmy'));
+        $password = Hash::make(Carbon::parse($request->input('tanggal_lahir'))->format('dmy'));
 
         $user = User::firstOrCreate(['email' => $request->input('email')]);
         $user->email = $request->input('email');
@@ -170,10 +170,12 @@ class EmployeeController extends BaseBleizingController
     		'user_id' => 'required|integer',
     		'employee_id' => 'required|integer',
     		'nama' => 'required|string',
+            'email' => 'required|string',
             'jenis_kelamin' => 'required|integer',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|string',
-            'alamat' => 'required|string'
+            'alamat' => 'required|string',
+            'user_type' => 'required|integer'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
@@ -188,6 +190,8 @@ class EmployeeController extends BaseBleizingController
         	$user->employee->tempat_lahir = $request->input('tempat_lahir');
         	$user->employee->tanggal_lahir = $request->input('tanggal_lahir');
         	$user->employee->alamat = $request->input('alamat');
+            $user->email = $request->input('email');
+            $user->user_type = $request->input('user_type');
 
         	$user->push();
 
