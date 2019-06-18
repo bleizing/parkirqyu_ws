@@ -107,9 +107,9 @@ class EmployeeController extends BaseBleizingController
     	$rules = array(
     		'user_id' => 'required|integer',
     		'email' => 'required|email',
-    		'user_type' => 'required|integer',
+    		'user_type' => 'required|string',
             'nama' => 'required|string',
-            'jenis_kelamin' => 'required|integer',
+            'jenis_kelamin' => 'required|string',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|string',
             'alamat' => 'required|string'
@@ -171,11 +171,11 @@ class EmployeeController extends BaseBleizingController
     		'employee_id' => 'required|integer',
     		'nama' => 'required|string',
             'email' => 'required|string',
-            'jenis_kelamin' => 'required|integer',
+            'jenis_kelamin' => 'required|string',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|string',
             'alamat' => 'required|string',
-            'user_type' => 'required|integer'
+            'user_type' => 'required|string'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
