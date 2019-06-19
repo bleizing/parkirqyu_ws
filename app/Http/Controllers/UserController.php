@@ -79,7 +79,7 @@ class UserController extends BaseBleizingController
         $user = $this->getUserModelById($request->input('user_id'));
 
         if ($user) {
-            $vehicles = $user->vehicles;
+            $vehicles = Vehicle::where('user_id', $user->id)->where('is_active', 1)->get();
 
             foreach ($vehicles as $key => $value) {
                 if ($value->vehicle_type == 1) {
