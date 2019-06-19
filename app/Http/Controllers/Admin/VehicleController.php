@@ -82,7 +82,7 @@ class VehicleController extends BaseBleizingController
     		'tahun_pembuatan' => 'required|string',
     		'nomor_rangka' => 'required|string',
     		'nomor_mesin' => 'required|string',
-    		'vehicle_type' => 'required|integer'
+    		'vehicle_type' => 'required|string'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
@@ -135,7 +135,7 @@ class VehicleController extends BaseBleizingController
     		'tahun_pembuatan' => 'required|string',
     		'nomor_rangka' => 'required|string',
     		'nomor_mesin' => 'required|string',
-    		'vehicle_type' => 'required|integer'
+    		'vehicle_type' => 'required|string'
         );
 
         if ($this->isValidationFail($request->all(), $rules)) {
