@@ -214,16 +214,20 @@ class EmployeeController extends BaseBleizingController
             return $this->sendResponse();
         }
 
-        $user = User::where('id', $request->input('employee_id'))->where('is_active', 1)->first();
-
-        if ($user) {
-        	$user->is_active = 0;
-
-        	$user->save();
-
-        	$this->deletedSuccess();
+        if ($request->input('user_id') == $request->input('employee_id')) {
+            $this->dataNotFound();
         } else {
-        	$this->dataNotFound();
+            $user = User::where('id', $request->input('employee_id'))->where('is_active', 1)->first();
+
+            if ($user) {
+                $user->is_active = 0;
+
+                $user->save();
+
+                $this->deletedSuccess();
+            } else {
+                $this->dataNotFound();
+            }
         }
 
         return $this->sendResponse();
