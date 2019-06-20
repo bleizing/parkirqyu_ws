@@ -125,14 +125,21 @@ class ParkirController extends BaseBleizingController
 						}
 					}
 
+                    $nominal = 'Rp ' . $this->withNumberFormat($info_parkir->nominal);
+                    $durasi_parkir = $info_parkir->hari . " Hari dan " . $info_parkir->jam . " jam";
+
+                    $vehicle_type = "Mobil";
+                    if ($vehicle->vehicle_type == 2) {
+                        $vehicle_type = "Motor";
+                    }
+
         			$data = array(
         				'invoice_id' => $invoice->id,
         				'invoice_code' => $invoice->invoice_code,
         				'nomor_registrasi' => $request->input('nomor_registrasi'),
-        				'hari' => $info_parkir->hari,
-        				'jam' => $info_parkir->jam,
-        				'nominal' => $info_parkir->nominal,
-        				'vehicle_type' => $vehicle->vehicle_type,
+        				'durasi_parkir' => $durasi_parkir,
+        				'nominal' => $nominal,
+        				'vehicle_type' => $vehicle_type,
         				'parkir_start' => $parkir_start,
         				'parkir_end' => $parkir_end,
         				'saldo_enough' => $saldo_enough
