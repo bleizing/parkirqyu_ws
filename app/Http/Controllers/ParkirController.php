@@ -190,6 +190,8 @@ class ParkirController extends BaseBleizingController
 						$transaksi->petugas_id = $user->id;
 						$transaksi->save();
 
+                        $invoice->push();
+
 						$this->updatedSuccess();
 					}
 				} else {
