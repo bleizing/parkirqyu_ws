@@ -75,13 +75,6 @@ class UserSeeder extends Seeder
             'nominal' => 1000000
         ]);
 
-    	$invoice_parkir = Invoice::create([
-    		'user_id' => $user->id,
-            'vehicle_id' => $vehicle->id,
-            'invoice_code' => 'P3567435649',
-    		'invoice_type' => 1
-    	]);
-
         $invoice_topup = Invoice::create([
             'user_id' => $user->id,
             'invoice_code' => 'T6390582563',
@@ -89,20 +82,7 @@ class UserSeeder extends Seeder
             'reference_code' => 'ABCD123EFG',
             'nominal' => 50000
         ]);
-
-        $invoice_parkir->nominal = 10000;
-        $invoice_parkir->payment_type = 1;
-        $invoice_parkir->save();
-
-    	$transaction_parkir = Transaction::create([
-    		'invoice_id' => $invoice_parkir->id,
-            'nominal_kredit' => $invoice_parkir->nominal,
-    		'petugas_id' => $user_admin->id
-    	]);
-
-        $invoice_parkir->is_active = 2;
-        $invoice_parkir->save();
-
+        
         $transaction_topup = Transaction::create([
             'invoice_id' => $invoice_topup->id,
             'nominal_debit' => $invoice_topup->nominal

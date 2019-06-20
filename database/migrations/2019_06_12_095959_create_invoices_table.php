@@ -16,13 +16,12 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->tinyInteger('is_active')->default(1);                   // 1 = Aktif, 0 = Tidak Aktif
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->bigInteger('vehicle_id')->unsigned()->nullable();       // For Parkir
             $table->string('invoice_code')->nullable();                     // No Invoice
             $table->tinyInteger('invoice_type');                            // 1 = Parkir, 2 = Topup
             $table->string('reference_code')->nullable();                   // For Topup
             $table->integer('nominal')->nullable();
-            $table->tinyInteger('payment_type')->nullable();                // For Parkir, 1 = Saldo, 2 = Cash 
             $table->timestamps();                                           // Created_at = Start, Updated_at = Finish
 
             $table->foreign('user_id')->references('id')->on('users');

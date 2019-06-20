@@ -19,7 +19,7 @@ class CreateParkirRatesTable extends Migration
             $table->integer('satu_jam_pertama');
             $table->integer('tiap_jam');
             $table->integer('per_hari');
-            $table->tinyInteger('parkir_type');                             // 1 = Motor, 2 = Mobil
+            $table->tinyInteger('parkir_type');                             // 1 = Mobil, 2 = Motor
             $table->timestamps();
         });
     }

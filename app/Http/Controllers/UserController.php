@@ -56,16 +56,6 @@ class UserController extends BaseBleizingController
         return $this->sendResponse();
 	}
 
-    public function get_parkir_rate()
-    {
-        $parkir_rates = ParkirRate::All();
-
-        $data = $parkir_rates;
-
-        $this->setData($data);
-        return $this->sendResponse();
-    }
-
     public function get_user_vehicle(Request $request)
     {
         $rules = array(

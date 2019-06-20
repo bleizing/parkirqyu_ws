@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
-        'user_id', 'invoice_code', 'invoice_type', 'nominal',
+        'invoice_code', 'invoice_type',
     ];
 
     public function user()
@@ -18,5 +18,10 @@ class Invoice extends Model
     public function transaction()
     {
     	return $this->hasOne('App\Transaction');
+    }
+
+    public function vehicle()
+    {
+        return $this->belongsTo('App\Vehicle');
     }
 }
