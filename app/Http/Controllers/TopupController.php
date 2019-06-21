@@ -143,10 +143,11 @@ class TopupController extends BaseBleizingController
     				'invoice_id' => $invoice->id
     			]);
     			$transaksi->nominal_debit = $invoice->nominal;
+    			$transaksi->save();
     			$invoice->is_active = 0;
     			$balance = $invoice->user->balance->nominal;
     			$balance += $invoice->nominal;
-    			$invoice->user->balance->nominal += $balance;
+    			$invoice->user->balance->nominal = $balance;
 
     			$invoice->push();
     		}
