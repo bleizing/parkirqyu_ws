@@ -27,7 +27,7 @@ class TopupController extends BaseBleizingController
         $user = $this->getUserModelById($request->input('user_id'));
 
         if ($user) {
-        	$invoice_code = "P" . mt_rand(10000000, 88888888);
+        	$invoice_code = "P" . mt_rand(1000000000, 2000000000);
 
         	$invoice = Invoice::create([
         		'invoice_type' => 2
