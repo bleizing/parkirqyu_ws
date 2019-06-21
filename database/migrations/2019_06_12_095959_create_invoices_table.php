@@ -20,7 +20,6 @@ class CreateInvoicesTable extends Migration
             $table->bigInteger('vehicle_id')->unsigned()->nullable();       // For Parkir
             $table->string('invoice_code')->nullable();                     // No Invoice
             $table->tinyInteger('invoice_type');                            // 1 = Parkir, 2 = Topup
-            $table->string('reference_code')->nullable();                   // For Topup
             $table->integer('nominal')->nullable();
             $table->timestamps();                                           // Created_at = Start, Updated_at = Finish
 

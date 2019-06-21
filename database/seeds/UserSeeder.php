@@ -79,7 +79,6 @@ class UserSeeder extends Seeder
             'user_id' => $user->id,
             'invoice_code' => 'T6390582563',
             'invoice_type' => 2,
-            'reference_code' => 'ABCD123EFG',
             'nominal' => 50000
         ]);
         

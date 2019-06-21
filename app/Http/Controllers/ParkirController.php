@@ -69,9 +69,9 @@ class ParkirController extends BaseBleizingController
 
         	if (!$invoice) {
         		$invoice = Invoice::create([
-        			'invoice_code' => $invoice_code,
         			'invoice_type' => 1
         		]);
+                $invoice->invoice_code = $invoice_code;
         		$invoice->user_id = $user_id;
         		$invoice->vehicle_id = $vehicle_id;
         		$invoice->save();

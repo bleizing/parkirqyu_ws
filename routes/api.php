@@ -26,6 +26,9 @@ Route::post('/parkir/check_in', 'ParkirController@check_in');
 Route::post('/parkir/pre_check_out', 'ParkirController@pre_check_out');
 Route::post('/parkir/check_out', 'ParkirController@check_out');
 
+Route::post('/topup/topup', 'TopupController@topup');
+Route::post('/topup/charge', 'TopupController@charge');
+
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
 	    Route::post('/get_all', 'Admin\EmployeeController@get_all');

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
-        'invoice_code', 'invoice_type',
+        'invoice_type',
     ];
 
     public function user()
