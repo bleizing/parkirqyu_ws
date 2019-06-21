@@ -8,6 +8,8 @@ use App\Http\Controllers\BaseBleizingController;
 
 use App\User;
 use App\Invoice;
+use App\Transaction;
+use App\Balance;
 
 class TopupController extends BaseBleizingController
 {
@@ -107,5 +109,41 @@ class TopupController extends BaseBleizingController
 		} else {
 			echo $response;
 		}
+    }
+
+    public function finish(Request $request)
+    {
+
+    }
+
+    public function notification(Request $request)
+    {
+    	if ($request->transaction_status == "capture" || $request->transaction_status == "settlement") {
+    		$invoice = Invoice::where('invoice_code', $request->order_id)->where('is_active', 1)->first();
+
+    		if ($invoice) {
+    			$user_id = $invoice->user->id;
+    			$transaksi = Transaction::create(
+    				'invoice_id' => $invoice->id,
+    				'nominal_debit' => $invoice->nominal
+    			);
+    			$invoice->is_active = 0;
+    			$balance = $invoice->user->balance->nominal;
+    			$balance += $invoice->nominal;
+    			$invoice->user->balance->nominal += $balance;
+
+    			$invoice->push();
+    		}
+    	}
+    }
+
+    public function unfinish(Request $request)
+    {
+    	
+    }
+
+    public function error(Request $request)
+    {
+    	
     }
 }
