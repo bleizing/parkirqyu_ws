@@ -28,6 +28,10 @@ Route::post('/parkir/check_out', 'ParkirController@check_out');
 
 Route::post('/topup/topup', 'TopupController@topup');
 Route::post('/topup/charge', 'TopupController@charge');
+Route::post('/topup/finish', 'TopupController@finish');
+Route::post('/topup/notification', 'TopupController@notification');
+Route::post('/topup/unfinish', 'TopupController@unfinish');
+Route::post('/topup/error', 'TopupController@error');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'employee'], function () {
