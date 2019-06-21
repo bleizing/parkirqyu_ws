@@ -28,7 +28,7 @@ class TopupController extends BaseBleizingController
         	$invoice_code = "P" . mt_rand(10000000, 88888888);
 
         	$invoice = Invoice::create([
-        		'invoice_type', 2
+        		'invoice_type' => 2
         	]);
         	$invoice->invoice_code = $invoice_code;
         	$invoice->nominal = $request->input('nominal');
