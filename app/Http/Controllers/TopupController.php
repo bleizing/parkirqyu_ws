@@ -123,10 +123,10 @@ class TopupController extends BaseBleizingController
 
     		if ($invoice) {
     			$user_id = $invoice->user->id;
-    			$transaksi = Transaction::create(
+    			$transaksi = Transaction::create([
     				'invoice_id' => $invoice->id,
     				'nominal_debit' => $invoice->nominal
-    			);
+    			]);
     			$invoice->is_active = 0;
     			$balance = $invoice->user->balance->nominal;
     			$balance += $invoice->nominal;
