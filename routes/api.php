@@ -23,6 +23,7 @@ Route::post('/user/get_user_info', 'UserController@get_user_info');
 
 Route::get('/parkir/get_parkir_rate', 'ParkirController@get_parkir_rate');
 Route::post('/parkir/check_in', 'ParkirController@check_in');
+Route::post('/parkir/in_parkir', 'ParkirController@in_parkir');
 Route::post('/parkir/pre_check_out', 'ParkirController@pre_check_out');
 Route::post('/parkir/check_out', 'ParkirController@check_out');
 

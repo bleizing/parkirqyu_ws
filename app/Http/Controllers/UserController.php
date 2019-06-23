@@ -116,6 +116,7 @@ class UserController extends BaseBleizingController
     {
         $user_id = $user->id;
         $nama = $user->employee->nama;
+        $email = $user->email;
         $jenis_kelamin = $user->employee->jenis_kelamin = 1 ? 'Laki-laki' : 'Perempuan';
         $tempat_lahir = $user->employee->tempat_lahir;
         $tanggal_lahir = Carbon::parse($user->employee->tanggal_lahir)->format('d/m/Y');
@@ -131,6 +132,7 @@ class UserController extends BaseBleizingController
         $data = array(
             'user_id' => $user_id,
             'nama' => $nama,
+            'email' => $email,
             'jenis_kelamin' => $jenis_kelamin,
             'tempat_lahir' => $tempat_lahir,
             'tanggal_lahir' => $tanggal_lahir,

@@ -88,7 +88,7 @@ class BaseBleizingController extends Controller
 
     protected function getCurrentDate()
     {
-        $current_date = Carbon::now();
+        $current_date = Carbon::now()->toDateTimeString();
 
         return $current_date;
     }
@@ -98,11 +98,11 @@ class BaseBleizingController extends Controller
         return number_format($val, 0, ",", ".");
     }
 
-    protected function calculateNominal(Invoice $invoice)
+    protected function calculateNominal($parkir_start, $parkir_end, $vehicle_type)
     {
-        $parkir_rate = ParkirRate::where('parkir_type', $invoice->vehicle->vehicle_type)->first();
-        $time_start = strtotime($invoice->created_at);
-        $time_end = strtotime($invoice->updated_at);
+        $parkir_rate = ParkirRate::where('parkir_type', $vehicle_type)->first();
+        $time_start = strtotime($parkir_start);
+        $time_end = strtotime($parkir_end);
 
         $hari = 0;
 

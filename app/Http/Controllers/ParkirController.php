@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\BaseBleizingController;
 
+use Carbon\Carbon;
+
 use App\User;
 use App\ParkirRate;
 use App\Vehicle;
@@ -87,6 +89,51 @@ class ParkirController extends BaseBleizingController
         return $this->sendResponse();
     }
 
+    public function in_parkir(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            $invoices = Invoice::where('user_id', $request->input('user_id'))->where('is_active', 1)->where('invoice_type', 1)->get();
+
+            $data = array();
+
+            foreach ($invoices as $key => $value) {
+                $now = $this->getCurrentDate();
+
+                $info_parkir_arr = (object) $this->calculateNominal($value->created_at, $now, $value->vehicle->vehicle_type);
+
+                $info_parkir = $info_parkir_arr->hari . " Hari dan " . $info_parkir_arr->jam . " jam";
+                $nominal = "Rp " . $this->withNumberFormat($info_parkir_arr->nominal);
+
+                // $value->info_parkir = $info_parkir;
+                // $value->nominal = $nominal;
+
+                $val = array(
+                    'info_parkir' => $info_parkir,
+                    'nominal' => $nominal,
+                    'nomor_registrasi' => $value->vehicle->nomor_registrasi
+                );
+
+                $data[$key] = $val;
+            }
+
+            $this->setData($data);
+        } else {
+            $this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
     public function pre_check_out(Request $request)
     {
     	$rules = array(
@@ -108,7 +155,9 @@ class ParkirController extends BaseBleizingController
         		if ($invoice) {
         			$invoice->is_active = 0;
 
-        			$info_parkir = (object) $this->calculateNominal($invoice);
+                    $now = $this->getCurrentDate();
+
+        			$info_parkir = (object) $this->calculateNominal($invoice->created_at, $now, $invoice->vehicle->vehicle_type);
         			$invoice->nominal = $info_parkir->nominal;
 
         			$invoice->save();
