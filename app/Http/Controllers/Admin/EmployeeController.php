@@ -102,6 +102,34 @@ class EmployeeController extends BaseBleizingController
         return $this->sendResponse();
     }
 
+    public function reset_password(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer',
+            'employee_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $employee = User::where('id', $request->input('employee_id'))->where('is_active', 1)->first();
+
+        if ($employee) {
+            $password = Hash::make(Carbon::parse($employee->employee->tanggal_lahir)->format('dmy'));
+
+            $employee->password = $password;
+
+            $employee->save();
+
+            $this->updatedSuccess();
+        } else {
+            $this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
     public function create(Request $request)
     {
     	$rules = array(

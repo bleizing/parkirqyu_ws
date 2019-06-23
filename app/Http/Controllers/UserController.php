@@ -112,6 +112,47 @@ class UserController extends BaseBleizingController
         return $this->sendResponse();
     }
 
+    public function change_password(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer',
+            'old_password' => 'required|string',
+            'new_password' => 'required|string'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            if (Hash::check($request->input('old_password'), $user->password)) {
+                $password = Hash::make($request->input('new_password'));
+
+                $user->password = $password;
+
+                $user->save();
+
+                $this->updatedSuccess();
+            } else {
+                $message = "Password Lama Salah";
+                $status_code = config('constant.status_codes.status_code_bad_request');
+                $error_code = config('constant.error_codes.error_code_data_not_match');
+
+                $data = array(
+                    'message' => $message
+                );
+
+                $this->preSendResponse($data, $status_code, $error_code);
+            }
+        } else {
+            $this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
     private function userResponse(User $user)
     {
         $user_id = $user->id;

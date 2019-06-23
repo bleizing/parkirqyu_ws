@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/user/login', 'UserController@login');
 Route::post('/user/get_user_vehicle', 'UserController@get_user_vehicle');
 Route::post('/user/get_user_info', 'UserController@get_user_info');
+Route::post('/user/change_password', 'UserController@change_password');
 
 Route::get('/parkir/get_parkir_rate', 'ParkirController@get_parkir_rate');
 Route::post('/parkir/check_in', 'ParkirController@check_in');
@@ -41,6 +42,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	    Route::post('/create', 'Admin\EmployeeController@create');
 	    Route::post('/edit', 'Admin\EmployeeController@edit');
 	    Route::post('/delete', 'Admin\EmployeeController@delete');
+	    Route::post('/reset_password', 'Admin\EmployeeController@reset_password');
 	});
 
 	Route::group(['prefix' => 'vehicle'], function () {
