@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
 
     	$balance = Balance::create([
     		'user_id' => $user->id,
-    		'nominal' => 100000
+    		'nominal' => 50000
     	]);
 
         $balance_admin = Balance::create([
@@ -84,7 +84,8 @@ class UserSeeder extends Seeder
         
         $transaction_topup = Transaction::create([
             'invoice_id' => $invoice_topup->id,
-            'nominal_debit' => $invoice_topup->nominal
+            'nominal_debit' => $invoice_topup->nominal,
+            'transaction_type' => 2
         ]);
 
     	$invoice_topup->is_active = 2;

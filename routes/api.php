@@ -27,6 +27,7 @@ Route::post('/parkir/check_in', 'ParkirController@check_in');
 Route::post('/parkir/in_parkir', 'ParkirController@in_parkir');
 Route::post('/parkir/pre_check_out', 'ParkirController@pre_check_out');
 Route::post('/parkir/check_out', 'ParkirController@check_out');
+Route::post('/parkir/get_user_log_transaction', 'ParkirController@get_user_log_transaction');
 
 Route::post('/topup/topup', 'TopupController@topup');
 Route::post('/topup/charge', 'TopupController@charge');
@@ -55,6 +56,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
 	Route::group(['prefix' => 'parkir_rate'], function () {
 	    Route::post('/edit', 'Admin\ParkirRateController@edit');
+	});
+
+	Route::group(['prefix' => 'transaction'], function () {
+	    Route::post('/get_log_transaction', 'Admin\TransactionController@get_log_transaction');
+	    Route::post('/in_parkir', 'Admin\TransactionController@in_parkir');
 	});
     // Route::get('/get_employee', '');
 });

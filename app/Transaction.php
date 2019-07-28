@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $fillable = [
-        'invoice_id',
+        'invoice_id', 'transaction_type',
     ];
 
     public function invoice()
@@ -17,6 +17,6 @@ class Transaction extends Model
 
     public function petugas()
     {
-    	return $this->belongsTo('App\User', 'id', 'petugas_id');
+    	return $this->belongsTo('App\User', 'petugas_id');
     }
 }

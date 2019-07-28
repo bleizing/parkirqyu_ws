@@ -58,21 +58,12 @@ class TopupController extends BaseBleizingController
 
     	$transaction_details = $request->transaction_details;
 
-    	// $transaction_details = array(
-    	// 	'order_id' => $request->input('order_id'),
-    	// 	'gross_amount' => $request->input('gross_amount')
-    	// );
-
     	$enabled_payments = array(
     		'credit_card',
     		'other_va'
     	);
 
     	$customer_details = $request->customer_details;
-
-    	// $customer_details = array(
-    	// 	'first_name' => $
-    	// )
 
     	$data = array(
     		'enabled_payments' => $enabled_payments
@@ -92,7 +83,6 @@ class TopupController extends BaseBleizingController
 		    CURLOPT_CUSTOMREQUEST => "POST",
 		    CURLOPT_POSTFIELDS => json_encode($data),
 		    CURLOPT_HTTPHEADER => array(
-		    	// Set here requred headers
 		        "accept: application/json",
 		        "content-type: application/json",
 		        "authorization: Basic $auth",
@@ -120,7 +110,8 @@ class TopupController extends BaseBleizingController
     			$user_id = $invoice->user->id;
     			$transaksi = Transaction::create([
     				'invoice_id' => $invoice->id,
-    				'nominal_debit' => $invoice->nominal
+    				'nominal_debit' => $invoice->nominal,
+                    'transaction_type' => 2
     			]);
     			$invoice->is_active = 0;
     			$balance = $invoice->user->balance->nominal;
@@ -140,7 +131,8 @@ class TopupController extends BaseBleizingController
     		if ($invoice) {
     			$user_id = $invoice->user->id;
     			$transaksi = Transaction::create([
-    				'invoice_id' => $invoice->id
+    				'invoice_id' => $invoice->id,
+                    'transaction_type' => 2
     			]);
     			$transaksi->nominal_debit = $invoice->nominal;
     			$transaksi->save();

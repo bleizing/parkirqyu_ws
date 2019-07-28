@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('invoice_id')->unsigned();
             $table->integer('nominal_debit')->default(0);
             $table->integer('nominal_kredit')->default(0);
+            $table->integer('transaction_type')->default(1);            // Tipe Pembayaran, 1 = Saldo, 2 = Cash
             $table->bigInteger('petugas_id')->unsigned()->nullable();
             $table->timestamps();
 

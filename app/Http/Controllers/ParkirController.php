@@ -165,7 +165,7 @@ class ParkirController extends BaseBleizingController
         			$parkir_start = date('d/m/Y H:i:s', strtotime($invoice->created_at));
         			$parkir_end = date('d/m/Y H:i:s', strtotime($invoice->updated_at));
 
-					$saldo_enough = 0;
+					$saldo_enough = 2;
 
         			if ($invoice->user != null) {
 	        			$saldo_user = $invoice->user->balance->nominal;
@@ -226,31 +226,98 @@ class ParkirController extends BaseBleizingController
         	$invoice = Invoice::where('id', $request->input('invoice_id'))->first();
 
 	        if ($invoice) {
-	        	if ($invoice->user != null && $request->input('payment_type') != 0) {
-					$saldo_user = $invoice->user->balance->nominal;
-					if ($saldo_user >= $invoice->nominal) {
-						$invoice->user->balance->nominal -= $invoice->nominal;
+                $transaksi = Transaction::create([
+                    'invoice_id' => $invoice->id,
+                    'transaction_type' => $request->input('payment_type')
+                ]);
 
-						$transaksi = Transaction::create([
-							'invoice_id' => $invoice->id
-						]);
+	        	if ($invoice->user != null) {
+                    $saldo_user = $invoice->user->balance->nominal;
 
-						$transaksi->nominal_kredit = $invoice->nominal;
-						$transaksi->petugas_id = $user->id;
-						$transaksi->save();
-
+                    if ($saldo_user >= $invoice->nominal) {
+                        $invoice->user->balance->nominal -= $invoice->nominal;
+                        
                         $invoice->push();
-
-						$this->updatedSuccess();
-					}
-				} else {
-					$this->updatedSuccess();
+                    }
 				}
+
+                $transaksi->petugas_id = $user->id;
+                $transaksi->nominal_kredit = $invoice->nominal;
+                $transaksi->save();
+
+                $this->updatedSuccess();
 	        } else {
 	        	$this->dataNotFound();
 	        }
         } else {
         	$this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
+    public function get_user_log_transaction(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            $now = $this->getCurrentDate();
+            $last_week = date('Y-m-d', strtotime($now . " - 7 days"));
+
+            $transactions = Invoice::where('user_id', $user->id)->whereDate('updated_at', '>=', $last_week)->where('is_active', 0)->get();
+
+            $data = array();
+
+            foreach ($transactions as $key => $value) {
+                $nama_petugas = "";
+                $nama = "";
+
+                if ($value->transaction->petugas != null) {
+                    $nama_petugas = $value->transaction->petugas->employee->nama;
+                }
+
+                $jenis_pelanggan = "Umum";
+
+                if ($value->user_id != null) {
+                    $jenis_pelanggan = "Karyawan";
+                } else {
+                    $nama = "Tamu";
+                }
+
+                $invoice_code = $value->invoice_code;
+                $nominal = 'Rp ';
+                $nominal .= $value->transaction->nominal_kredit != null ? $value->transaction->nominal_kredit : $value->transaction->nominal_debit;
+                $invoice_type = $value->invoice_type == 1 ? 'Parkir' : 'Topup';
+                $time = date('d/m/Y H:i:s', strtotime($value->created_at)) . " - " . date('d/m/Y H:i:s', strtotime($value->updated_at));
+                $transaction_type = $value->Transaction->transaction_type == 1 ? 'Saldo' : 'Cash';
+
+                $nomor_registrasi = $value->vehicle == null ? "" : $value->vehicle->nomor_registrasi;
+
+                $list = array(
+                    'nomor_registrasi' => $nomor_registrasi,
+                    'invoice_code' => $invoice_code,
+                    'invoice_type' => $invoice_type,
+                    'nominal' => $nominal,
+                    'transaction_type' => $transaction_type,
+                    'time' => $time,
+                    'nama_petugas' => $nama_petugas,
+                    'jenis_pelanggan' => $jenis_pelanggan
+                );
+
+                $data[$key] = $list;
+            }
+
+            $this->setData($data);
+        } else {
+            $this->dataNotFound();
         }
 
         return $this->sendResponse();

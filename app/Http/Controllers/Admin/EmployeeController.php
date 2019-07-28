@@ -156,12 +156,6 @@ class EmployeeController extends BaseBleizingController
         $user->is_active = 1;
         $user->save();
 
-        // $user = User::create([
-        // 	'email' => $request->input('email'),
-        // 	'password' => $password,
-        // 	'user_type' => $request->input('user_type')
-        // ]);
-
         $employee = Employee::firstOrCreate(['user_id' => $user->id]);
         $employee->nama = $request->input('nama');
         $employee->jenis_kelamin = $request->input('jenis_kelamin');
@@ -170,23 +164,8 @@ class EmployeeController extends BaseBleizingController
         $employee->alamat = $request->input('alamat');
         $employee->save();
 
-        // $employee = Employee::create([
-        // 	'user_id' => $user->id,
-        // 	'nama' => $request->input('nama'),
-        // 	'jenis_kelamin' => $request->input('jenis_kelamin'),
-        // 	'tempat_lahir' => $request->input('tempat_lahir'),
-        // 	'tanggal_lahir' => $request->input('tanggal_lahir'),
-        // 	'alamat' => $request->input('alamat')
-        // ]);
-
         $balance = Balance::firstOrCreate(['user_id' => $user->id]);
         $balance->save();
-
-        // $balance = Balance::create([
-        // 	'user_id' => $user->id,
-        // 	'nominal' => 0.0
-        // ]);
-
 
         $this->createdSuccess();
         return $this->sendResponse();
