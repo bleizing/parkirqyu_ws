@@ -88,7 +88,7 @@ class UserSeeder extends Seeder
             'transaction_type' => 2
         ]);
 
-    	$invoice_topup->is_active = 2;
+    	$invoice_topup->is_active = 0;
     	$invoice_topup->save();
     }
 }

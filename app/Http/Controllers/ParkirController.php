@@ -294,7 +294,7 @@ class ParkirController extends BaseBleizingController
 
                 $invoice_code = $value->invoice_code;
                 $nominal = 'Rp ';
-                $nominal .= $value->transaction->nominal_kredit != null ? $value->transaction->nominal_kredit : $value->transaction->nominal_debit;
+                $nominal .= $value->nominal;
                 $invoice_type = $value->invoice_type == 1 ? 'Parkir' : 'Topup';
                 $time = date('d/m/Y H:i:s', strtotime($value->created_at)) . " - " . date('d/m/Y H:i:s', strtotime($value->updated_at));
                 $transaction_type = $value->Transaction->transaction_type == 1 ? 'Saldo' : 'Cash';
