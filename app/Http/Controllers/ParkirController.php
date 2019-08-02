@@ -76,6 +76,11 @@ class ParkirController extends BaseBleizingController
                 $invoice->invoice_code = $invoice_code;
         		$invoice->user_id = $user_id;
         		$invoice->vehicle_id = $vehicle_id;
+
+                if ($request->input('time_start') != "") {
+                    $invoice->created_at = $request->input('time_start');
+                }
+
         		$invoice->save();
 
                 $this->createdSuccess();
@@ -316,6 +321,75 @@ class ParkirController extends BaseBleizingController
             }
 
             $this->setData($data);
+        } else {
+            $this->dataNotFound();
+        }
+
+        return $this->sendResponse();
+    }
+
+    public function group_check_in(Request $request)
+    {
+        $rules = array(
+            'user_id' => 'required|integer',
+            'nomor_registrasi' => 'required|string',
+            'vehicle_type' => 'required|integer',
+            'time_start' => 'string'
+        );
+
+        if ($this->isValidationFail($request->all(), $rules)) {
+            return $this->sendResponse();
+        }
+
+        $user = $this->getUserModelById($request->input('user_id'));
+
+        if ($user) {
+            $user_id = null;
+
+            if ($request->input('vehicle_type') == 0) {
+                $vehicle = Vehicle::where('nomor_registrasi', $request->input('nomor_registrasi'))->where('is_active', 1)->first();
+
+                if (!$vehicle) {
+                    $this->dataNotFound();
+                    return $this->sendResponse();
+                }
+            } else {
+                $vehicle = Vehicle::where('nomor_registrasi', $request->input('nomor_registrasi'))->first();
+                if (!$vehicle) {
+                    $vehicle = Vehicle::create([
+                        'nomor_registrasi' => $request->input('nomor_registrasi'),
+                        'vehicle_type' => $request->input('vehicle_type')
+                    ]);
+                }
+            }
+
+            if ($vehicle->user != null) {
+                $user_id = $vehicle->user->id;
+            }
+
+            $invoice_code = "P" . mt_rand(1000000000, 2000000000);
+            $vehicle_id = $vehicle->id;
+
+            $invoice = Invoice::where('vehicle_id', $vehicle_id)->where('is_active', 1)->first();
+
+            if (!$invoice) {
+                $invoice = Invoice::create([
+                    'invoice_type' => 1
+                ]);
+                $invoice->invoice_code = $invoice_code;
+                $invoice->user_id = $user_id;
+                $invoice->vehicle_id = $vehicle_id;
+
+                if ($request->input('time_start') != "") {
+                    $invoice->created_at = $request->input('time_start');
+                }
+
+                $invoice->save();
+
+                $this->createdSuccess();
+            } else {
+                $this->dataExisted();
+            }
         } else {
             $this->dataNotFound();
         }
