@@ -23,29 +23,44 @@ class UserSeeder extends Seeder
     public function run()
     {
     	$user_admin = User::create([
-    		'email' => 'dimasz_97@yahoo.com',
-    		'password' => Hash::make('test123'),
+    		'email' => 'admin@gmail.com',
+    		'password' => Hash::make('12345'),
     		'user_type' => 1
     	]);
 
     	$employee_admin = Employee::create([
     		'user_id' => $user_admin->id,
-    		'nama' => 'Dimas Admin',
+    		'nama' => 'Admin',
     		'jenis_kelamin' => 1,
     		'tempat_lahir' => 'Jakarta',
     		'tanggal_lahir' => Carbon::createFromFormat('d/m/Y', '01/01/1990'),
     		'alamat' => 'kalbis'
     	]);
 
+        $user_petugas = User::create([
+            'email' => 'petugas@gmail.com',
+            'password' => Hash::make('12345'),
+            'user_type' => 2
+        ]);
+
+        $employee_petugas = Employee::create([
+            'user_id' => $user_petugas->id,
+            'nama' => 'Petugas',
+            'jenis_kelamin' => 1,
+            'tempat_lahir' => 'Jakarta',
+            'tanggal_lahir' => Carbon::createFromFormat('d/m/Y', '01/01/1990'),
+            'alamat' => 'kalbis'
+        ]);
+
     	$user = User::create([
-    		'email' => 'dimas@bleizing.com',
-    		'password' => Hash::make('test123'),
+    		'email' => 'karyawan@gmail.com',
+    		'password' => Hash::make('12345'),
     		'user_type' => 3
     	]);
 
     	$employee = Employee::create([
     		'user_id' => $user->id,
-    		'nama' => 'Dimas',
+    		'nama' => 'Karyawan',
     		'jenis_kelamin' => 1,
     		'tempat_lahir' => 'Jakarta',
     		'tanggal_lahir' => Carbon::createFromFormat('d/m/Y', '01/01/1990'),
@@ -55,7 +70,7 @@ class UserSeeder extends Seeder
     	$vehicle = Vehicle::create([
     		'user_id' => $user->id,
     		'nomor_registrasi' => 'B1234ABC',
-    		'nama_pemilik' => 'Dimas',
+    		'nama_pemilik' => 'Karyawan B',
     		'alamat' => 'Bekasi',
     		'merk' => 'Honda',
     		'type' => 'ABCDEF8G A/T',
